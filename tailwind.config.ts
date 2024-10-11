@@ -12,8 +12,13 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        man: ['"Manrope"', "sans-serif"],
+        nun: ['"Nunito"', "sans-serif"],
+      },
     },
   },
-  plugins: [],
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  plugins: [require('daisyui'),],
 };
 export default config;
