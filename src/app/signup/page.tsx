@@ -16,7 +16,7 @@ const Signup = () => {
                 </div>
 
                 <p className="mt-3 text-xl text-center text-gray-600">
-                    Register Here!
+                    Welcome, Register Here!
                 </p>
 
                 <div className="mt-4">
