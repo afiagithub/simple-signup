@@ -2,6 +2,10 @@ import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
+    session: {
+        strategy: 'jwt',
+        maxAge: 30 * 24 * 60 * 60
+    },
     providers: [
         CredentialsProvider({
             name: "Simple Signup",
