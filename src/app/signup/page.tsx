@@ -19,7 +19,7 @@ const Signup = () => {
             alert("Please provide all data")
         }
         else{
-            const res = await axios.post('http://localhost:3000/api/auth/signup', userData)
+            const res = await axios.post(`${process.env.NEXTAUTH_URL}/api/auth/signup`, userData)
             console.log(res.data);
             
         }
