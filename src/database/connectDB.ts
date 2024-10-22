@@ -13,9 +13,8 @@ export const connectDb = async () => {
             process.exit(1);            
         })
         
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.log(error);
-                
+        throw new Error(error as string)     
     }
 }

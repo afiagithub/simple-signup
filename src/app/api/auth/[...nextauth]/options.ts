@@ -1,11 +1,21 @@
-import { AuthOptions } from "next-auth";
+import { connectDb } from "@/database/connectDB";
+import User from "@/models/UserModel";
+import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs"
 
-export const authOptions: AuthOptions = {
-    session: {
-        strategy: 'jwt',
-        maxAge: 30 * 24 * 60 * 60
-    },
+interface Credentials {
+    email: string;
+    password: string;
+}
+
+interface User {
+    id: string;
+    name: string;
+    email: string;
+}
+
+export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "Simple Signup",
@@ -13,15 +23,27 @@ export const authOptions: AuthOptions = {
                 email: { label: "Email Address", type: "email", placeholder: "Enter Email" },
                 password: { label: "Password", type: "password" }
             },
-            async authorize(credentials) {
-                const user = { id: "1", name: "J Smith", email: credentials?.email }
-
-                if (user) {
-                    // Any object returned will be saved in `user` property of the JWT
-                    return user
-                } else {
-                    // If you return null then an error will be displayed advising the user to check their details.
-                    return null
+            async authorize(credentials: Credentials | undefined): Promise<User | null> {
+                if (!credentials) {
+                    throw new Error("Credentials not found!!!");
+                }
+                await connectDb();
+                try {
+                    const email = credentials.email;
+                    const password = credentials.password;
+                    const user = await User.findOne({ email });
+                    if (!user) {
+                        throw new Error("User not found");
+                    }
+                    const checkPassword = await bcrypt.compare(password, user.password);
+                    if (!checkPassword) {
+                        throw new Error("Incorrect password");
+                    }
+                    console.log(user);                    
+                    return user;
+                } catch (error: unknown) {
+                    console.log(error);
+                    throw new Error(error as string);
                 }
             }
         })
