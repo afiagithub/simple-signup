@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export default function Home() {
+  
   return (
     <div className="flex flex-col items-center justify-items-center mt-16 font-man">
       <h1 className="text-5xl font-semibold">Simple Signup</h1>
