@@ -39,10 +39,8 @@ export const authOptions: NextAuthOptions = {
                     if (!checkPassword) {
                         throw new Error("Incorrect password");
                     }
-                    console.log(user);
                     return user;
                 } catch (error: unknown) {
-                    console.log(error);
                     throw new Error(error as string);
                 }
             }
@@ -65,16 +63,13 @@ export const authOptions: NextAuthOptions = {
                 })
                 await newUser.save();
             }
-            console.log(existingUser);
             return true;
         },
         async jwt({ user, token }) {
-            console.log("from line 72", user);
             if (user) {
                 token.name = user.name;
                 token.email = user.email;
             }
-            console.log("from line 77", token);
             return token;
         },
         async session({ session, token }) {
