@@ -1,13 +1,15 @@
 "use client"
-import { useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react'
+// import { useSession } from 'next-auth/react';
 import React from 'react'
 
 const About = () => {
-    const session = useSession();
-    console.log(session);
+    // const session = useSession();
+    // console.log(session);
     return (
         <div>
-
+            <button className='btn btn-outline'
+                onClick={() => signOut({ callbackUrl: "/login" })}>Sign Out</button>
         </div>
     )
 }
